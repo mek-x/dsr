@@ -32,13 +32,16 @@ SRC_TEST_FILES1=\
   $(TEST_RUNNERS_DIR)/test_runner.c \
   $(TEST_RUNNERS_DIR)/all_tests.c
 
+DSR_FILES=\
+  ../src/dsr.c
+
 INC_DIRS=-I../inc -I$(UNITY_DIR) -I$(UNITY_FIXTURE_DIR)
 
 
 all: clean default
 
 default:
-	$(CC) $(CFLAGS) $(INC_DIRS) $(SRC_TEST_FILES1) -o $(TEST_TARGET1)
+	$(CC) $(CFLAGS) $(INC_DIRS) $(SRC_TEST_FILES1) $(DSR_FILES) -o $(TEST_TARGET1)
 	./$(TEST_TARGET1)
 
 clean:

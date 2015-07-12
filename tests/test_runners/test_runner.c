@@ -2,5 +2,5 @@
 
 TEST_GROUP_RUNNER(test)
 {
-    RUN_TEST_CASE(test, sample_test);
+    RUN_TEST_CASE(test, CanSendSomeMessage);
 }

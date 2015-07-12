@@ -1,3 +1,5 @@
+SRC_DIR = src
+INCLUDE_DIR = inc
 TEST_DIR = tests
 
 .PHONY: test
