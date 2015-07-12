@@ -2,7 +2,7 @@
 
 static void RunAllTests(void)
 {
-	RUN_TEST_GROUP(test);
+	RUN_TEST_GROUP(test_DSR_api);
 }
 
 int main(int argc, const char * argv[])
