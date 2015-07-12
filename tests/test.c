@@ -21,11 +21,12 @@ TEST(test_DSR_api, canSendSomeMessage)
     TEST_ASSERT_EQUAL(5, DSR_send(addr, buf, buf_len));
 }
 
-TEST(test_DSR_api, sendingMessageStoresItOnBuffer)
+TEST(test_DSR_api, sendingMessageStoresItOnBufferWithTargetAddr)
 {
     DSR_send(addr, buf, buf_len);
-    TEST_ASSERT_EQUAL_MEMORY(buf, DSR_msg_buffer, buf_len);
-    TEST_ASSERT_EQUAL(buf_len, DSR_msg_buffer_len);
+    TEST_ASSERT_EQUAL_MEMORY(buf, getMsg(), buf_len);
+    TEST_ASSERT_EQUAL(buf_len, getMsgLen());
+    TEST_ASSERT_EQUAL(addr, getMsgTarget());
 }
 
 TEST(test_DSR_api, afterInitRouteCacheShouldBeClear)
