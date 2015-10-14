@@ -118,7 +118,7 @@ void UnityPrintLen(const char* string, const _UU32 length)
 
     if (pch != NULL)
     {
-        while (*pch && (pch - string) < length)
+        while (*pch && (unsigned)(pch - string) < length)
         {
             // printable characters plus CR & LF are printed
             if ((*pch <= 126) && (*pch >= 32))
