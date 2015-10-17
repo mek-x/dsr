@@ -10,16 +10,15 @@ struct msg_t {
     uint8_t target;
 };
 
-static struct msg_t recv_msg;
-
 struct dsr_t {
     uint8_t node_addr;
     int queue_index;
     struct msg_t msg_queue[MSG_BUFFER_SIZE];
+    struct msg_t recv_msg;
 };
 
 /* private prototypes */
-int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length);
+static int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length);
 
 /* public interface */
 DSR_Node DSR_init(uint8_t node_addr)
@@ -49,12 +48,10 @@ int DSR_send(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
 
 int DSR_receive(DSR_Node node, uint8_t *addr, uint8_t *buf, uint8_t length)
 {
-    (void)node;
+    *addr = node->recv_msg.target;
+    memcpy(buf, node->recv_msg.buffer, length);
 
-    *addr = recv_msg.target;
-    memcpy(buf, recv_msg.buffer, length);
-
-    return recv_msg.length;
+    return node->recv_msg.length;
 }
 
 int DSR_getRouteCount(DSR_Node node)
@@ -65,7 +62,7 @@ int DSR_getRouteCount(DSR_Node node)
 }
 
 /* private functions implementation */
-int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
+static int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
 {
     if (node->queue_index >= MSG_BUFFER_SIZE) {
         return -1;
@@ -97,10 +94,9 @@ uint8_t getMsgTarget(DSR_Node node, int index)
     return node->msg_queue[index].target;
 }
 
-void setRcvMsg(uint8_t addr, uint8_t *buf, uint8_t buf_len)
+void setRcvMsg(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t buf_len)
 {
-
-    recv_msg.target = addr;
-    memcpy(recv_msg.buffer, buf, buf_len);
-    recv_msg.length = buf_len;
+    node->recv_msg.target = addr;
+    memcpy(node->recv_msg.buffer, buf, buf_len);
+    node->recv_msg.length = buf_len;
 }

@@ -17,6 +17,6 @@ int DSR_getRouteCount(DSR_Node node);
 const uint8_t * getMsg(DSR_Node node, int index);
 int getMsgLen(DSR_Node node, int index);
 uint8_t getMsgTarget(DSR_Node node, int index);
-void setRcvMsg(uint8_t addr, uint8_t *buf, uint8_t buf_len);
+void setRcvMsg(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t buf_len);
 
 #endif /* DSR_H */

@@ -44,7 +44,7 @@ TEST(test_DSR_api, canReceiveSomeMessage)
     uint8_t addr_recv, buf_recv_len = 5;
     uint8_t buf_recv[5] = {0};
 
-    setRcvMsg(addr, buf, buf_len);
+    setRcvMsg(node, addr, buf, buf_len);
 
     status = DSR_receive(node, &addr_recv, buf_recv, buf_recv_len);
     TEST_ASSERT_EQUAL_MEMORY(buf, buf_recv, buf_recv_len);
