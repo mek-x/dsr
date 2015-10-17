@@ -33,6 +33,14 @@ TEST(test_DSR_api, afterDestructionNodeShouldBeNull)
     TEST_ASSERT_EQUAL(NULL, node2);
 }
 
+TEST(test_DSR_api, functionsShouldReturnErrorWhenNodeIsNull)
+{
+    DSR_destroy(&node);
+    TEST_ASSERT_EQUAL_MESSAGE(-1, DSR_send(node, addr, buf, buf_len), "DSR_send is not behaving correctly");
+    TEST_ASSERT_EQUAL_MESSAGE(-1, DSR_getRouteCount(node), "DSR_getRouteCount is not behaving correctly");
+    TEST_ASSERT_EQUAL_MESSAGE(-1, DSR_receive(node, NULL, NULL, 0), "DSR_getRouteCount is not behaving correctly");
+}
+
 TEST(test_DSR_api, canSetTwoNodesWithDistinctAddresses)
 {
     DSR_Node node2;

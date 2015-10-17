@@ -4,7 +4,8 @@ TEST_GROUP_RUNNER(test_DSR_api)
 {
     RUN_TEST_CASE(test_DSR_api, nodeAddrSetAfterInit);
     RUN_TEST_CASE(test_DSR_api, afterDestructionNodeShouldBeNull);
-    RUN_TEST_CASE(test_DSR_api, canSetTwoNodesWithDistinctAddresses)
+    RUN_TEST_CASE(test_DSR_api, functionsShouldReturnErrorWhenNodeIsNull);
+    RUN_TEST_CASE(test_DSR_api, canSetTwoNodesWithDistinctAddresses);
     RUN_TEST_CASE(test_DSR_api, canSendSomeMessage);
     RUN_TEST_CASE(test_DSR_api, sendingMessageStoresItOnBufferWithTargetAddr);
     RUN_TEST_CASE(test_DSR_api, afterInitRouteCacheShouldBeClear);

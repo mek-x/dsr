@@ -4,6 +4,8 @@
 
 #include "dsr.h"
 
+#define ERROR -1
+
 struct msg_t {
     uint8_t buffer[MSG_MAX_LEN];
     uint8_t length;
@@ -18,7 +20,7 @@ struct dsr_t {
 };
 
 /* private prototypes */
-static int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length);
+static int queue_message(DSR_Node node, struct msg_t msg);
 
 /* public interface */
 DSR_Node DSR_init(uint8_t node_addr)
@@ -41,14 +43,25 @@ void DSR_destroy(DSR_Node *node)
 
 int DSR_send(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
 {
-    if (queue_message(node, addr, buf, length) != 0)
-        return -1;
+    if (NULL == node)
+        return ERROR;
+
+    struct msg_t msg;
+    msg.target = addr;
+    memcpy(msg.buffer, buf, length);
+    msg.length = length;
+
+    if (queue_message(node, msg) != 0)
+        return ERROR;
 
     return length;
 }
 
 int DSR_receive(DSR_Node node, uint8_t *addr, uint8_t *buf, uint8_t length)
 {
+    if (NULL == node)
+        return ERROR;
+
     *addr = node->recv_msg.target;
     memcpy(buf, node->recv_msg.buffer, length);
 
@@ -57,22 +70,19 @@ int DSR_receive(DSR_Node node, uint8_t *addr, uint8_t *buf, uint8_t length)
 
 int DSR_getRouteCount(DSR_Node node)
 {
-    (void)node;
+    if (NULL == node)
+        return ERROR;
 
     return 0;
 }
 
-/* private functions implementation */
-static int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
+/* private functions implementations */
+static int queue_message(DSR_Node node, struct msg_t msg)
 {
     if (node->queue_index >= MSG_BUFFER_SIZE) {
-        return -1;
+        return ERROR;
     }
-    node->msg_queue[node->queue_index].length = length;
-    node->msg_queue[node->queue_index].target = addr;
-    memcpy(node->msg_queue[node->queue_index].buffer,
-           buf,
-           node->msg_queue[node->queue_index].length);
+    node->msg_queue[node->queue_index] = msg;
     node->queue_index++;
 
     return 0;
