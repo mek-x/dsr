@@ -10,10 +10,12 @@ uint8_t buf_len = 5;
 
 TEST_SETUP(test_DSR_api)
 {
+    DSR_init();
 }
 
 TEST_TEAR_DOWN(test_DSR_api)
 {
+    DSR_destroy();
 }
 
 TEST(test_DSR_api, canSendSomeMessage)
@@ -33,4 +35,18 @@ TEST(test_DSR_api, afterInitRouteCacheShouldBeClear)
 {
     int routes = DSR_getRouteCount();
     TEST_ASSERT_EQUAL(0, routes);
+}
+
+TEST(test_DSR_api, canReceiveSomeMessage)
+{
+    int status;
+    uint8_t addr_recv, buf_recv_len = 5;
+    uint8_t buf_recv[5] = {0};
+
+    setRcvMsg(addr, buf, buf_len);
+
+    status = DSR_receive(&addr_recv, buf_recv, buf_recv_len);
+    TEST_ASSERT_EQUAL_MEMORY(buf, buf_recv, buf_recv_len);
+    TEST_ASSERT_EQUAL(addr_recv, addr);
+    TEST_ASSERT_EQUAL(buf_len, status);
 }
