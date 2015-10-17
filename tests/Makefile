@@ -28,7 +28,7 @@ TEST_TARGET1 = all_tests
 SRC_TEST_FILES1=\
   $(UNITY_DIR)/unity.c \
   $(UNITY_FIXTURE_DIR)/unity_fixture.c \
-  test.c \
+  test_dsr_api.c \
   $(TEST_RUNNERS_DIR)/test_runner.c \
   $(TEST_RUNNERS_DIR)/all_tests.c
 
@@ -46,4 +46,3 @@ default:
 
 clean:
 	$(RM) -f $(TEST_TARGET1)
-
