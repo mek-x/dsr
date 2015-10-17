@@ -5,15 +5,23 @@
 #include "dsr.h"
 
 struct msg_t {
-    uint8_t buffer[100];
+    uint8_t buffer[MSG_MAX_LEN];
     uint8_t length;
     uint8_t target;
-} msg;
+};
+
+static struct msg_t recv_msg;
 
 struct dsr_t {
     uint8_t node_addr;
+    int queue_index;
+    struct msg_t msg_queue[MSG_BUFFER_SIZE];
 };
 
+/* private prototypes */
+int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length);
+
+/* public interface */
 DSR_Node DSR_init(uint8_t node_addr)
 {
     DSR_Node node;
@@ -34,23 +42,19 @@ void DSR_destroy(DSR_Node *node)
 
 int DSR_send(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
 {
-    (void)node;
+    queue_message(node, addr, buf, length);
 
-    msg.length = length;
-    memcpy(msg.buffer, buf, msg.length);
-    msg.target = addr;
-
-    return 5;
+    return length;
 }
 
 int DSR_receive(DSR_Node node, uint8_t *addr, uint8_t *buf, uint8_t length)
 {
     (void)node;
 
-    *addr = msg.target;
-    memcpy(buf, msg.buffer, length);
+    *addr = recv_msg.target;
+    memcpy(buf, recv_msg.buffer, length);
 
-    return msg.length;
+    return recv_msg.length;
 }
 
 int DSR_getRouteCount(DSR_Node node)
@@ -60,26 +64,43 @@ int DSR_getRouteCount(DSR_Node node)
     return 0;
 }
 
+/* private functions implementation */
+int queue_message(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
+{
+    if (node->queue_index >= MSG_BUFFER_SIZE) {
+        return -1;
+    }
+    node->msg_queue[node->queue_index].length = length;
+    node->msg_queue[node->queue_index].target = addr;
+    memcpy(node->msg_queue[node->queue_index].buffer,
+           buf,
+           node->msg_queue[node->queue_index].length);
+    node->queue_index++;
+
+    return 0;
+}
+
 
 /* testing functions */
-const uint8_t * getMsg(void)
+const uint8_t * getMsg(DSR_Node node, int index)
 {
-    return msg.buffer;
+    return node->msg_queue[index].buffer;
 }
 
-int getMsgLen(void)
+int getMsgLen(DSR_Node node, int index)
 {
-    return msg.length;
+    return node->msg_queue[index].length;
 }
 
-uint8_t getMsgTarget(void)
+uint8_t getMsgTarget(DSR_Node node, int index)
 {
-    return msg.target;
+    return node->msg_queue[index].target;
 }
 
 void setRcvMsg(uint8_t addr, uint8_t *buf, uint8_t buf_len)
 {
-    msg.target = addr;
-    memcpy(msg.buffer, buf, buf_len);
-    msg.length = buf_len;
+
+    recv_msg.target = addr;
+    memcpy(recv_msg.buffer, buf, buf_len);
+    recv_msg.length = buf_len;
 }
