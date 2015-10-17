@@ -11,7 +11,7 @@ struct msg_t {
 };
 
 struct dsr_t {
-    uint8_t node_addr;
+    uint8_t address;
     int queue_index;
     struct msg_t msg_queue[MSG_BUFFER_SIZE];
     struct msg_t recv_msg;
@@ -26,7 +26,7 @@ DSR_Node DSR_init(uint8_t node_addr)
     DSR_Node node;
 
     node = calloc(1, sizeof(struct dsr_t));
-    node->node_addr = node_addr;
+    node->address = node_addr;
 
     return node;
 }
@@ -41,7 +41,8 @@ void DSR_destroy(DSR_Node *node)
 
 int DSR_send(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t length)
 {
-    queue_message(node, addr, buf, length);
+    if (queue_message(node, addr, buf, length) != 0)
+        return -1;
 
     return length;
 }
@@ -99,4 +100,9 @@ void setRcvMsg(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t buf_len)
     node->recv_msg.target = addr;
     memcpy(node->recv_msg.buffer, buf, buf_len);
     node->recv_msg.length = buf_len;
+}
+
+uint8_t getNodeAddr(DSR_Node node)
+{
+    return node->address;
 }

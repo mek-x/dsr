@@ -7,16 +7,41 @@ TEST_GROUP(test_DSR_api);
 uint8_t addr = 1, buf_len = 5;
 uint8_t buf[5] = {0xaa, 0x55, 0xaa, 0x55, 0xaa};
 
+#define NODE_ADDR 21
 DSR_Node node;
 
 TEST_SETUP(test_DSR_api)
 {
-    node = DSR_init(0);
+    node = DSR_init(NODE_ADDR);
 }
 
 TEST_TEAR_DOWN(test_DSR_api)
 {
     DSR_destroy(&node);
+}
+
+TEST(test_DSR_api, nodeAddrSetAfterInit)
+{
+    TEST_ASSERT_EQUAL(NODE_ADDR, getNodeAddr(node));
+}
+
+TEST(test_DSR_api, afterDestructionNodeShouldBeNull)
+{
+    DSR_Node node2;
+    node2 = DSR_init(33);
+    DSR_destroy(&node2);
+    TEST_ASSERT_EQUAL(NULL, node2);
+}
+
+TEST(test_DSR_api, canSetTwoNodesWithDistinctAddresses)
+{
+    DSR_Node node2;
+    node2 = DSR_init(33);
+
+    TEST_ASSERT_EQUAL(NODE_ADDR, getNodeAddr(node));
+    TEST_ASSERT_EQUAL(33, getNodeAddr(node2));
+
+    DSR_destroy(&node2);
 }
 
 TEST(test_DSR_api, canSendSomeMessage)
@@ -66,4 +91,12 @@ TEST(test_DSR_api, storeTwoDifferentMessagesOnBuffer)
     TEST_ASSERT_EQUAL(addr2, getMsgTarget(node, 1));
     TEST_ASSERT_EQUAL(buf_len, getMsgLen(node, 0));
     TEST_ASSERT_EQUAL(buf_len2, getMsgLen(node, 1));
+}
+
+TEST(test_DSR_api, sendShouldReturnErrorWhenOverflow)
+{
+    for(int i = 0; i < MSG_BUFFER_SIZE; i++) {
+        DSR_send(node, addr, buf, buf_len);
+    }
+    TEST_ASSERT_EQUAL(-1, DSR_send(node, addr, buf, buf_len));
 }

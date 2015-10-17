@@ -18,5 +18,6 @@ const uint8_t * getMsg(DSR_Node node, int index);
 int getMsgLen(DSR_Node node, int index);
 uint8_t getMsgTarget(DSR_Node node, int index);
 void setRcvMsg(DSR_Node node, uint8_t addr, uint8_t *buf, uint8_t buf_len);
+uint8_t getNodeAddr(DSR_Node node);
 
 #endif /* DSR_H */
