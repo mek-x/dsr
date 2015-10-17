@@ -8,24 +8,26 @@ uint8_t addr = 1;
 uint8_t buf[5] = {0xaa, 0x55, 0xaa, 0x55, 0xaa};
 uint8_t buf_len = 5;
 
+DSR_Node node;
+
 TEST_SETUP(test_DSR_api)
 {
-    DSR_init();
+    node = DSR_init(0);
 }
 
 TEST_TEAR_DOWN(test_DSR_api)
 {
-    DSR_destroy();
+    DSR_destroy(&node);
 }
 
 TEST(test_DSR_api, canSendSomeMessage)
 {
-    TEST_ASSERT_EQUAL(5, DSR_send(addr, buf, buf_len));
+    TEST_ASSERT_EQUAL(5, DSR_send(node, addr, buf, buf_len));
 }
 
 TEST(test_DSR_api, sendingMessageStoresItOnBufferWithTargetAddr)
 {
-    DSR_send(addr, buf, buf_len);
+    DSR_send(node, addr, buf, buf_len);
     TEST_ASSERT_EQUAL_MEMORY(buf, getMsg(), buf_len);
     TEST_ASSERT_EQUAL(buf_len, getMsgLen());
     TEST_ASSERT_EQUAL(addr, getMsgTarget());
@@ -33,7 +35,7 @@ TEST(test_DSR_api, sendingMessageStoresItOnBufferWithTargetAddr)
 
 TEST(test_DSR_api, afterInitRouteCacheShouldBeClear)
 {
-    int routes = DSR_getRouteCount();
+    int routes = DSR_getRouteCount(node);
     TEST_ASSERT_EQUAL(0, routes);
 }
 
@@ -45,7 +47,7 @@ TEST(test_DSR_api, canReceiveSomeMessage)
 
     setRcvMsg(addr, buf, buf_len);
 
-    status = DSR_receive(&addr_recv, buf_recv, buf_recv_len);
+    status = DSR_receive(node, &addr_recv, buf_recv, buf_recv_len);
     TEST_ASSERT_EQUAL_MEMORY(buf, buf_recv, buf_recv_len);
     TEST_ASSERT_EQUAL(addr_recv, addr);
     TEST_ASSERT_EQUAL(buf_len, status);
