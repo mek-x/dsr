@@ -46,3 +46,14 @@ TEST(test_DSR_options, createRREQMsgReturnsErrorWhenBufferTooSmall)
     length = createRREQMsg(message_buffer, 2, 0, 0);
     TEST_ASSERT_EQUAL(-1, length);
 }
+
+TEST(test_DSR_options, createRREPOption)
+{
+    uint8_t expected_output[] = {0x30, 0x03, 0x01, 0x02, 0x03};
+    uint8_t addr_list[] = {0x01, 0x02, 0x03};
+    int length;
+
+    length = createRREPMsg(message_buffer, sizeof(message_buffer), addr_list, sizeof(addr_list));
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
+}
