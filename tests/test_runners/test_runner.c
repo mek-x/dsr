@@ -17,5 +17,6 @@ TEST_GROUP_RUNNER(test_DSR_api)
 TEST_GROUP_RUNNER(test_DSR_options)
 {
     RUN_TEST_CASE(test_DSR_options, createRREQOption);
-    RUN_TEST_CASE(test_DSR_options, createRREQsWithDifferentTargets);
+    RUN_TEST_CASE(test_DSR_options, createRREQsWithDifferentTargetsAndIds);
+    RUN_TEST_CASE(test_DSR_options, createRREQMsgReturnsErrorWhenBufferTooSmall);
 }

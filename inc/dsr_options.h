@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t target);
+int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t target, uint8_t id);
 
 #endif /* DSR_OPTIONS_H */
