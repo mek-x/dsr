@@ -102,13 +102,20 @@ TEST(test_DSR_options, createAREQOption)
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
 
-/*
 TEST(test_DSR_options, createAREPOption)
 {
     uint8_t expected_output[] = {0x5, 0x3, 0x0, 0x1, 0x2};
     int length;
+
+    length = createAREPMsg(message_buffer, 2, 0, 1, 2);
+    TEST_ASSERT_EQUAL(-1, length);
+
+    length = createAREPMsg(message_buffer, sizeof(message_buffer), 0, 1, 2);
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
 
+/*
 TEST(test_DSR_options, createROUTEOption)
 {
     uint8_t expected_output[] = {0x6, 0x3, 0x0, 0x1, 0x2};
