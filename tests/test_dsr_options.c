@@ -121,7 +121,7 @@ TEST(test_DSR_options, createROUTOption)
     uint8_t addr_list[] = {0x01, 0x02};
     int length;
 
-    length = createROUTMsg(message_buffer, 2, addr_list, 1);
+    length = createROUTMsg(message_buffer, 2, addr_list, 2);
     TEST_ASSERT_EQUAL(-1, length);
 
     length = createROUTMsg(message_buffer, sizeof(message_buffer), addr_list, sizeof(addr_list));
@@ -129,10 +129,16 @@ TEST(test_DSR_options, createROUTOption)
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
 
-/*
 TEST(test_DSR_options, createDATAOption)
 {
     uint8_t expected_output[] = {0x7, 0x3, 0xaa, 0x55, 0xaa};
+    uint8_t data[] = {0xaa, 0x55, 0xaa};
     int length;
+
+    length = createDATAMsg(message_buffer, 2, data, 3);
+    TEST_ASSERT_EQUAL(-1, length);
+
+    length = createDATAMsg(message_buffer, sizeof(message_buffer), data, sizeof(data));
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
-*/
