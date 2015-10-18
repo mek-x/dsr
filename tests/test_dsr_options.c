@@ -16,7 +16,7 @@ TEST_TEAR_DOWN(test_DSR_options)
 
 TEST(test_DSR_options, createRREQOption)
 {
-    uint8_t expected_output[] = {0x20, 2 ,0, 0};
+    uint8_t expected_output[] = {0x2, 2 ,0, 0};
     int length;
 
     length = createRREQMsg(message_buffer, sizeof(message_buffer), 0, 0);
@@ -27,7 +27,7 @@ TEST(test_DSR_options, createRREQOption)
 
 TEST(test_DSR_options, createRREQsWithDifferentTargetsAndIds)
 {
-    uint8_t expected_output[] = {0x20, 2 ,1, 1};
+    uint8_t expected_output[] = {0x2, 2 ,1, 1};
     int length;
 
     length = createRREQMsg(message_buffer, sizeof(message_buffer), 1, 1);
@@ -49,7 +49,7 @@ TEST(test_DSR_options, createRREQMsgReturnsErrorWhenBufferTooSmall)
 
 TEST(test_DSR_options, createRREPOption)
 {
-    uint8_t expected_output[] = {0x30, 0x03, 0x01, 0x02, 0x03};
+    uint8_t expected_output[] = {0x3, 0x03, 0x01, 0x02, 0x03};
     uint8_t addr_list[] = {0x01, 0x02, 0x03};
     int length;
 
@@ -64,4 +64,49 @@ TEST(test_DSR_options, createRREPMsgReturnsErrorWhenBufferTooSmall)
 
     length = createRREPMsg(message_buffer, 2, NULL, 1);
     TEST_ASSERT_EQUAL(-1, length);
+}
+
+TEST(test_DSR_options, createRERROption)
+{
+    uint8_t expected_output[] = {0x1, 0x3, 0x0, 0x1, 0x2};
+    int length;
+
+    length = createRERRMsg(message_buffer, 2, 0, 0 ,0);
+    TEST_ASSERT_EQUAL_MESSAGE(-1, length, "Buffer too small and no error!");
+
+    length = createRERRMsg(message_buffer, sizeof(message_buffer), 0, 1, 2);
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
+
+    expected_output[2] = 1;
+    expected_output[3] = 3;
+    expected_output[4] = 5;
+
+    length = createRERRMsg(message_buffer, sizeof(message_buffer), 1, 3, 5);
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
+}
+
+TEST(test_DSR_options, createAREQOption)
+{
+    uint8_t expected_output[] = {0x4, 0x1, 0x1};
+    int length;
+}
+
+TEST(test_DSR_options, createAREPOption)
+{
+    uint8_t expected_output[] = {0x5, 0x3, 0x0, 0x1, 0x2};
+    int length;
+}
+
+TEST(test_DSR_options, createROUTEOption)
+{
+    uint8_t expected_output[] = {0x6, 0x3, 0x0, 0x1, 0x2};
+    int length;
+}
+
+TEST(test_DSR_options, createDATAOption)
+{
+    uint8_t expected_output[] = {0x7, 0x3, 0xaa, 0x55, 0xaa};
+    int length;
 }
