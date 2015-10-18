@@ -13,6 +13,7 @@ enum dsr_types_t {
 #define RREQ_HDR_LEN 4
 #define RREP_HDR_LEN 2
 #define RERR_LEN 5
+#define AREQ_LEN 3
 
 int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target)
 {
@@ -55,4 +56,17 @@ int createRERRMsg(uint8_t *buf, uint8_t length, uint8_t err_type, uint8_t source
     *buf++ = target;
 
     return RERR_LEN;
+}
+
+int createAREQMsg(uint8_t *buf, uint8_t length, uint8_t id)
+{
+    (void)buf; (void)id;
+    if(length < AREQ_LEN)
+        return -1;
+
+    *buf++ = AREQ_TYPE;
+    *buf++ = 1;
+    *buf++ = id;
+
+    return AREQ_LEN;
 }

@@ -1,13 +1,15 @@
+#include <string.h>
 #include <unity_fixture.h>
 
 #include "dsr_options.h"
 
 TEST_GROUP(test_DSR_options);
 
-uint8_t message_buffer[10] = {0};
+uint8_t message_buffer[10];
 
 TEST_SETUP(test_DSR_options)
 {
+    memset(message_buffer, 0xa5, sizeof(message_buffer));
 }
 
 TEST_TEAR_DOWN(test_DSR_options)
@@ -72,7 +74,7 @@ TEST(test_DSR_options, createRERROption)
     int length;
 
     length = createRERRMsg(message_buffer, 2, 0, 0 ,0);
-    TEST_ASSERT_EQUAL_MESSAGE(-1, length, "Buffer too small and no error!");
+    TEST_ASSERT_EQUAL(-1, length);
 
     length = createRERRMsg(message_buffer, sizeof(message_buffer), 0, 1, 2);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
@@ -87,13 +89,20 @@ TEST(test_DSR_options, createRERROption)
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
 
-/*
 TEST(test_DSR_options, createAREQOption)
 {
     uint8_t expected_output[] = {0x4, 0x1, 0x1};
     int length;
+
+    length = createAREQMsg(message_buffer, 2, 0);
+    TEST_ASSERT_EQUAL(-1, length);
+
+    length = createAREQMsg(message_buffer, sizeof(message_buffer), 1);
+    TEST_ASSERT_EQUAL(sizeof(expected_output), length);
+    TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
 
+/*
 TEST(test_DSR_options, createAREPOption)
 {
     uint8_t expected_output[] = {0x5, 0x3, 0x0, 0x1, 0x2};
