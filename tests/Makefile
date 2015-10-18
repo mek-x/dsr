@@ -33,7 +33,8 @@ SRC_TEST_FILES1=\
   $(TEST_RUNNERS_DIR)/all_tests.c
 
 DSR_FILES=\
-  ../src/dsr.c
+  ../src/dsr.c \
+  ../src/dsr_options.c
 
 INC_DIRS=-I../inc -I$(UNITY_DIR) -I$(UNITY_FIXTURE_DIR)
 
