@@ -3,6 +3,7 @@
 static void RunAllTests(void)
 {
 	RUN_TEST_GROUP(test_DSR_api);
+	RUN_TEST_GROUP(test_DSR_options);
 }
 
 int main(int argc, const char * argv[])
