@@ -10,71 +10,49 @@ enum dsr_types_t {
     DATA_TYPE
 };
 
-int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t target, uint8_t id)
-{
-    uint8_t i = 0;
+#define RREQ_HDR_LEN 4
+#define RREP_HDR_LEN 2
+#define RERR_LEN 5
 
-    if(length < 4)
+int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target)
+{
+    if(length < RREQ_HDR_LEN)
         return -1;
 
     *buf++ = RREQ_TYPE;
-    i++;
-
     *buf++ = 2;
-    i++;
-
     *buf++ = id;
-    i++;
-
     *buf++ = target;
-    i++;
 
-    return i;
+    return RREQ_HDR_LEN;
 }
 
 int createRREPMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len)
 {
-    uint8_t i = 0;
-
-    if(length < addr_list_len + 2)
+    if(length < RREP_HDR_LEN + addr_list_len)
         return -1;
 
-    *buf++ = RREP_TYPE;
-    i++;
+    length = RREP_HDR_LEN + addr_list_len;
 
+    *buf++ = RREP_TYPE;
     *buf++ = addr_list_len;
-    i++;
 
     while(addr_list_len--)
-    {
         *buf++ = *addr_list++;
-        i++;
-    }
 
-    return i;
+    return length;
 }
 
 int createRERRMsg(uint8_t *buf, uint8_t length, uint8_t err_type, uint8_t source, uint8_t target)
 {
-    uint8_t i = 0;
-
-    if(length < 5)
+    if(length < RERR_LEN)
         return -1;
 
     *buf++ = RERR_TYPE;
-    i++;
-
     *buf++ = 3;
-    i++;
-
     *buf++ = err_type;
-    i++;
-
     *buf++ = source;
-    i++;
-
     *buf++ = target;
-    i++;
 
-    return i;
+    return RERR_LEN;
 }
