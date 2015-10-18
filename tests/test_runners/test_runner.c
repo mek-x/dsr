@@ -13,3 +13,8 @@ TEST_GROUP_RUNNER(test_DSR_api)
     RUN_TEST_CASE(test_DSR_api, storeTwoDifferentMessagesOnBuffer);
     RUN_TEST_CASE(test_DSR_api, sendShouldReturnErrorWhenOverflow);
 }
+
+TEST_GROUP_RUNNER(test_DSR_options)
+{
+    
+}
