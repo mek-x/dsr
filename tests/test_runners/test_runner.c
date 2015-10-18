@@ -20,4 +20,5 @@ TEST_GROUP_RUNNER(test_DSR_options)
     RUN_TEST_CASE(test_DSR_options, createRREQsWithDifferentTargetsAndIds);
     RUN_TEST_CASE(test_DSR_options, createRREQMsgReturnsErrorWhenBufferTooSmall);
     RUN_TEST_CASE(test_DSR_options, createRREPOption);
+    RUN_TEST_CASE(test_DSR_options, createRREPMsgReturnsErrorWhenBufferTooSmall);
 }

@@ -57,3 +57,11 @@ TEST(test_DSR_options, createRREPOption)
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
+
+TEST(test_DSR_options, createRREPMsgReturnsErrorWhenBufferTooSmall)
+{
+    int length;
+
+    length = createRREPMsg(message_buffer, 2, NULL, 1);
+    TEST_ASSERT_EQUAL(-1, length);
+}

@@ -24,8 +24,10 @@ int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t target, uint8_t id)
 
 int createRREPMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len)
 {
-    (void)length;
     uint8_t i = 0;
+
+    if(length < addr_list_len + 2)
+        return -1;
 
     *buf++ = 0x30;
     i++;
