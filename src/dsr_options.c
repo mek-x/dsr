@@ -6,7 +6,7 @@ enum dsr_types_t {
     RREP_TYPE,
     AREQ_TYPE,
     AREP_TYPE,
-    ROUTE_TYPE,
+    ROUT_TYPE,
     DATA_TYPE
 };
 
@@ -15,6 +15,7 @@ enum dsr_types_t {
 #define RERR_LEN 5
 #define AREQ_LEN 3
 #define AREP_LEN 5
+#define ROUT_HDR_LEN 3
 
 int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target)
 {
@@ -83,4 +84,21 @@ int createAREPMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t ack_source, 
     *buf++ = ack_target;
 
     return AREP_LEN;
+}
+
+int createROUTMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len)
+{
+    if(length < ROUT_HDR_LEN + addr_list_len)
+        return -1;
+
+    length = ROUT_HDR_LEN + addr_list_len;
+
+    *buf++ = ROUT_TYPE;
+    *buf++ = addr_list_len + 1;
+    *buf++ = addr_list_len; // segments left
+
+    while(addr_list_len--)
+        *buf++ = *addr_list++;
+
+    return length;
 }
