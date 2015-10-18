@@ -21,7 +21,7 @@ enum dsr_types_t {
 int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target)
 {
     if(length < RREQ_HDR_LEN)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     *buf++ = RREQ_TYPE;
     *buf++ = 2;
@@ -34,7 +34,7 @@ int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target)
 int createRREPMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len)
 {
     if(length < RREP_HDR_LEN + addr_list_len)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     length = RREP_HDR_LEN + addr_list_len;
 
@@ -50,7 +50,7 @@ int createRREPMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr
 int createRERRMsg(uint8_t *buf, uint8_t length, uint8_t err_type, uint8_t source, uint8_t target)
 {
     if(length < RERR_LEN)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     *buf++ = RERR_TYPE;
     *buf++ = 3;
@@ -64,7 +64,7 @@ int createRERRMsg(uint8_t *buf, uint8_t length, uint8_t err_type, uint8_t source
 int createAREQMsg(uint8_t *buf, uint8_t length, uint8_t id)
 {
     if(length < AREQ_LEN)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     *buf++ = AREQ_TYPE;
     *buf++ = 1;
@@ -76,7 +76,7 @@ int createAREQMsg(uint8_t *buf, uint8_t length, uint8_t id)
 int createAREPMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t ack_source, uint8_t ack_target)
 {
     if(length < AREP_LEN)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     *buf++ = AREP_TYPE;
     *buf++ = 3;
@@ -90,7 +90,7 @@ int createAREPMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t ack_source, 
 int createROUTMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len)
 {
     if(length < ROUT_HDR_LEN + addr_list_len)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     length = ROUT_HDR_LEN + addr_list_len;
 
@@ -107,7 +107,7 @@ int createROUTMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr
 int createDATAMsg(uint8_t *buf, uint8_t length, uint8_t *data, uint8_t data_len)
 {
     if(length < DATA_HDR_LEN + data_len)
-        return -1;
+        return ERROR_CREATE_MSG;
 
     length = DATA_HDR_LEN + data_len;
 

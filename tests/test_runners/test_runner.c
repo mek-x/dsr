@@ -26,4 +26,5 @@ TEST_GROUP_RUNNER(test_DSR_options)
     RUN_TEST_CASE(test_DSR_options, createAREPOption);
     RUN_TEST_CASE(test_DSR_options, createROUTOption);
     RUN_TEST_CASE(test_DSR_options, createDATAOption);
+    RUN_TEST_CASE(test_DSR_options, createMessageDataWithRoute);
 }
