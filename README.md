@@ -14,6 +14,7 @@ WIP
 
 ### DSR options
 This implementation defines 7 types of DSR headers (options):
+
 1. [Route error (RERR)](#route-error)
 2. [Route request (RREQ)](#route-request)
 3. [Route reply (RREP)](#route-reply)
