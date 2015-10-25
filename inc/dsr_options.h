@@ -5,12 +5,51 @@
 
 #define ERROR_CREATE_MSG 0
 
-int createRREQMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t target);
-int createRREPMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len);
-int createRERRMsg(uint8_t *buf, uint8_t length, uint8_t err_type, uint8_t source, uint8_t target);
-int createAREQMsg(uint8_t *buf, uint8_t length, uint8_t id);
-int createAREPMsg(uint8_t *buf, uint8_t length, uint8_t id, uint8_t ack_source, uint8_t ack_target);
-int createROUTMsg(uint8_t *buf, uint8_t length, uint8_t *addr_list, uint8_t addr_list_len);
-int createDATAMsg(uint8_t *buf, uint8_t length, uint8_t *data, uint8_t data_len);
+struct rreq_option {
+    uint8_t id;
+    uint8_t target;
+    uint8_t *addr_list;
+    uint8_t addr_list_len;
+};
+
+struct rrep_option {
+    uint8_t *addr_list;
+    uint8_t addr_list_len;
+};
+
+struct rerr_option {
+    uint8_t err_type;
+    uint8_t source;
+    uint8_t target;
+};
+
+struct areq_option {
+    uint8_t id;
+};
+
+struct arep_option {
+    uint8_t id;
+    uint8_t source;
+    uint8_t target;
+};
+
+struct rout_option {
+    uint8_t segments_left;
+    uint8_t *addr_list;
+    uint8_t addr_list_len;
+};
+
+struct data_option {
+    uint8_t *data;
+    uint8_t data_len;
+};
+
+int createRREQMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+int createRREPMsg(uint8_t *buf, uint8_t length, struct rrep_option *header);
+int createRERRMsg(uint8_t *buf, uint8_t length, struct rerr_option *header);
+int createAREQMsg(uint8_t *buf, uint8_t length, struct areq_option *header);
+int createAREPMsg(uint8_t *buf, uint8_t length, struct arep_option *header);
+int createROUTMsg(uint8_t *buf, uint8_t length, struct rout_option *header);
+int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option *header);
 
 #endif /* DSR_OPTIONS_H */
