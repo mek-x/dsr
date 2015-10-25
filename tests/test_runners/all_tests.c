@@ -5,6 +5,7 @@ static void RunAllTests(void)
 	RUN_TEST_GROUP(test_DSR_api);
 	RUN_TEST_GROUP(test_DSR_options);
 	RUN_TEST_GROUP(test_DSR_options_errors);
+	RUN_TEST_GROUP(test_DSR_options_getters);
 }
 
 int main(int argc, const char * argv[])

@@ -37,3 +37,8 @@ TEST_GROUP_RUNNER(test_DSR_options_errors)
     RUN_TEST_CASE(test_DSR_options_errors, createROUTOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options_errors, createDATAOptionErrorHandling);
 }
+
+TEST_GROUP_RUNNER(test_DSR_options_getters)
+{
+
+}
