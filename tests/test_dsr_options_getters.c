@@ -15,7 +15,7 @@ TEST_TEAR_DOWN(test_DSR_options_getters)
 
 TEST(test_DSR_options_getters, getMsgTypeFromBuffer)
 {
-    uint8_t type = 0x02;
+    uint8_t type = RREQ_TYPE;
     TEST_ASSERT_EQUAL(RREQ_TYPE, getMsgType(&type));
 }
 
