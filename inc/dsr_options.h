@@ -5,6 +5,17 @@
 
 #define ERROR_CREATE_MSG 0
 
+enum dsr_types_t {
+    RERR_TYPE = 1,
+    RREQ_TYPE,
+    RREP_TYPE,
+    AREQ_TYPE,
+    AREP_TYPE,
+    ROUT_TYPE,
+    DATA_TYPE,
+    TYPE_ERROR = -1
+};
+
 struct rreq_option {
     uint8_t id;
     uint8_t target;
@@ -51,6 +62,8 @@ int createAREQMsg(uint8_t *buf, uint8_t length, struct areq_option header);
 int createAREPMsg(uint8_t *buf, uint8_t length, struct arep_option header);
 int createROUTMsg(uint8_t *buf, uint8_t length, struct rout_option header);
 int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option header);
+
+enum dsr_types_t getMsgType(const uint8_t *buf);
 
 uint8_t *getRREQMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
 uint8_t *getRREPMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);

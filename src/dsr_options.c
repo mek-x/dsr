@@ -1,16 +1,6 @@
 #include "dsr_options.h"
 #include <stdlib.h>
 
-enum dsr_types_t {
-    RERR_TYPE = 1,
-    RREQ_TYPE,
-    RREP_TYPE,
-    AREQ_TYPE,
-    AREP_TYPE,
-    ROUT_TYPE,
-    DATA_TYPE
-};
-
 #define FIXED_HDR_LEN   2
 
 #define RREQ_HDR_LEN    2
@@ -39,6 +29,8 @@ enum dsr_types_t {
 
 #define CHECK_LEN(type, length, header) \
     ((length) >= type ## _LEN(header) ? type ## _LEN(header) : ERROR_CREATE_MSG)
+
+#define TYPE_HEADER_MASK 0x07
 
 static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void *header);
 static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void *header)
@@ -172,4 +164,13 @@ inline int createROUTMsg(uint8_t *buf, uint8_t length, struct rout_option header
 inline int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option header)
 {
     return createMsg(DATA_TYPE, buf, length, &header);
+}
+
+enum dsr_types_t getMsgType(const uint8_t *buf)
+{
+    if (((*buf & (~TYPE_HEADER_MASK)) != 0) ||
+        ((*buf & TYPE_HEADER_MASK) == 0))
+        return TYPE_ERROR;
+
+    return *buf;
 }

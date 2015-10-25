@@ -13,7 +13,20 @@ TEST_TEAR_DOWN(test_DSR_options_getters)
 {
 }
 
-TEST(test_DSR_options_getters, getRREQMessageFromBuffer)
+TEST(test_DSR_options_getters, getMsgTypeFromBuffer)
 {
-    
+    uint8_t type = 0x02;
+    TEST_ASSERT_EQUAL(RREQ_TYPE, getMsgType(&type));
+}
+
+TEST(test_DSR_options_getters, getMsgTypeFromBufferWrongType)
+{
+    uint8_t type = 0x22;
+    TEST_ASSERT_EQUAL(TYPE_ERROR, getMsgType(&type));
+
+    type = 0x08;
+    TEST_ASSERT_EQUAL(TYPE_ERROR, getMsgType(&type));
+
+    type = 0x00;
+    TEST_ASSERT_EQUAL(TYPE_ERROR, getMsgType(&type));
 }
