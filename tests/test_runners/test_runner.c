@@ -17,14 +17,18 @@ TEST_GROUP_RUNNER(test_DSR_api)
 TEST_GROUP_RUNNER(test_DSR_options)
 {
     RUN_TEST_CASE(test_DSR_options, createRREQOption);
-    RUN_TEST_CASE(test_DSR_options, createRREQsWithDifferentTargetsAndIds);
-    RUN_TEST_CASE(test_DSR_options, createRREQMsgReturnsErrorWhenBufferTooSmall);
+    RUN_TEST_CASE(test_DSR_options, createRREQOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createRREPOption);
-    RUN_TEST_CASE(test_DSR_options, createRREPMsgReturnsErrorWhenBufferTooSmall);
+    RUN_TEST_CASE(test_DSR_options, createRREPOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createRERROption);
+    RUN_TEST_CASE(test_DSR_options, createRERROptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createAREQOption);
+    RUN_TEST_CASE(test_DSR_options, createAREQOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createAREPOption);
+    RUN_TEST_CASE(test_DSR_options, createAREPOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createROUTOption);
+    RUN_TEST_CASE(test_DSR_options, createROUTOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createDATAOption);
+    RUN_TEST_CASE(test_DSR_options, createDATAOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createMessageDataWithRoute);
 }
