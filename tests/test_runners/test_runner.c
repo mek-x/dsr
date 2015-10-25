@@ -40,6 +40,8 @@ TEST_GROUP_RUNNER(test_DSR_options_errors)
 
 TEST_GROUP_RUNNER(test_DSR_options_getters)
 {
-    RUN_TEST_CASE(test_DSR_options_getters, getMsgTypeFromBuffer);
-    RUN_TEST_CASE(test_DSR_options_getters, getMsgTypeFromBufferWrongType);
+    RUN_TEST_CASE(test_DSR_options_getters, getMessageType);
+    RUN_TEST_CASE(test_DSR_options_getters, getMessageTypeAndWrongType);
+    RUN_TEST_CASE(test_DSR_options_getters, getRREQMessage);
+    RUN_TEST_CASE(test_DSR_options_getters, getRREQMessageWithAddressList);
 }

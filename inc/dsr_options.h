@@ -65,12 +65,12 @@ int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option header);
 
 enum dsr_types_t getMsgType(const uint8_t *buf);
 
-uint8_t *getRREQMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getRREPMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getRERRMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getAREQMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getAREPMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getROUTMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
-uint8_t *getDATAMsg(const uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getRREQMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getRREPMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getRERRMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getAREQMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getAREPMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getROUTMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
+uint8_t *getDATAMsg(uint8_t *buf, uint8_t length, struct rreq_option *header);
 
 #endif /* DSR_OPTIONS_H */

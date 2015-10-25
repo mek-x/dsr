@@ -173,3 +173,15 @@ enum dsr_types_t getMsgType(const uint8_t *buf)
 
     return *buf;
 }
+
+uint8_t *getRREQMsg(uint8_t *buf, uint8_t length, struct rreq_option *header)
+{
+    (void)length;
+
+    header->addr_list_len = buf[1] - RREQ_HDR_LEN;
+    header->id = buf[2];
+    header->target = buf[3];
+    header->addr_list = &buf[5];
+
+    return buf + FIXED_HDR_LEN + buf[1] + 1;
+}
