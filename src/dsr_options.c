@@ -40,8 +40,8 @@ enum dsr_types_t {
 #define CHECK_LEN(type, length, header) \
     ((length) >= type ## _LEN(header) ? type ## _LEN(header) : ERROR_CREATE_MSG)
 
-static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void* header);
-static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void* header)
+static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void *header);
+static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length, void *header)
 {
     switch (type) {
     case RERR_TYPE:
@@ -80,8 +80,8 @@ static uint8_t checkHeaderAndReturnLength(enum dsr_types_t type, uint8_t length,
     return length;
 }
 
-static int createMsg(enum dsr_types_t type, uint8_t *buf, uint8_t length, void* header);
-static int createMsg(enum dsr_types_t type, uint8_t *buf, uint8_t length, void* header)
+static int createMsg(enum dsr_types_t type, uint8_t *buf, uint8_t length, void *header);
+static int createMsg(enum dsr_types_t type, uint8_t *buf, uint8_t length, void *header)
 {
     if (NULL == buf || NULL == header)
         return ERROR_CREATE_MSG;
@@ -139,37 +139,37 @@ static int createMsg(enum dsr_types_t type, uint8_t *buf, uint8_t length, void* 
     return length;
 }
 
-inline int createRREQMsg(uint8_t *buf, uint8_t length, struct rreq_option *header)
+inline int createRREQMsg(uint8_t *buf, uint8_t length, struct rreq_option header)
 {
-    return createMsg(RREQ_TYPE, buf, length, header);
+    return createMsg(RREQ_TYPE, buf, length, &header);
 }
 
-inline int createRREPMsg(uint8_t *buf, uint8_t length, struct rrep_option *header)
+inline int createRREPMsg(uint8_t *buf, uint8_t length, struct rrep_option header)
 {
-    return createMsg(RREP_TYPE, buf, length, header);
+    return createMsg(RREP_TYPE, buf, length, &header);
 }
 
-inline int createRERRMsg(uint8_t *buf, uint8_t length, struct rerr_option *header)
+inline int createRERRMsg(uint8_t *buf, uint8_t length, struct rerr_option header)
 {
-    return createMsg(RERR_TYPE, buf, length, header);
+    return createMsg(RERR_TYPE, buf, length, &header);
 }
 
-inline int createAREQMsg(uint8_t *buf, uint8_t length, struct areq_option *header)
+inline int createAREQMsg(uint8_t *buf, uint8_t length, struct areq_option header)
 {
-    return createMsg(AREQ_TYPE, buf, length, header);
+    return createMsg(AREQ_TYPE, buf, length, &header);
 }
 
-inline int createAREPMsg(uint8_t *buf, uint8_t length, struct arep_option *header)
+inline int createAREPMsg(uint8_t *buf, uint8_t length, struct arep_option header)
 {
-    return createMsg(AREP_TYPE, buf, length, header);
+    return createMsg(AREP_TYPE, buf, length, &header);
 }
 
-inline int createROUTMsg(uint8_t *buf, uint8_t length, struct rout_option *header)
+inline int createROUTMsg(uint8_t *buf, uint8_t length, struct rout_option header)
 {
-    return createMsg(ROUT_TYPE, buf, length, header);
+    return createMsg(ROUT_TYPE, buf, length, &header);
 }
 
-inline int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option *header)
+inline int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option header)
 {
-    return createMsg(DATA_TYPE, buf, length, header);
+    return createMsg(DATA_TYPE, buf, length, &header);
 }

@@ -31,17 +31,14 @@ TEST(test_DSR_options_errors, createRREQOptionErrorHandling)
         .addr_list_len = 0
     };
 
-    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
+    length = createRREQMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createRREQMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    length = createRREQMsg(message_buffer, 3, &hdr);
+    length = createRREQMsg(message_buffer, 3, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
     hdr.addr_list_len = 1;
-    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -49,24 +46,19 @@ TEST(test_DSR_options_errors, createRREPOptionErrorHandling)
 {
     uint8_t addr_list[] = {0x01, 0x02, 0x03};
     struct rrep_option hdr = {
-        .addr_list = NULL,
+        .addr_list = addr_list,
         .addr_list_len = 0
     };
 
-    length = createRREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    hdr.addr_list = addr_list;
-
-    length = createRREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
     hdr.addr_list_len = sizeof(addr_list);
 
-    length = createRREPMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREPMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createRREPMsg(message_buffer, 4, &hdr);
+    length = createRREPMsg(message_buffer, 4, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -78,13 +70,10 @@ TEST(test_DSR_options_errors, createRERROptionErrorHandling)
         .target = 2
     };
 
-    length = createRERRMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
+    length = createRERRMsg(message_buffer, 4, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createRERRMsg(message_buffer, 4, &hdr);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    length = createRERRMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRERRMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -94,13 +83,10 @@ TEST(test_DSR_options_errors, createAREQOptionErrorHandling)
         .id = 1
     };
 
-    length = createAREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
+    length = createAREQMsg(message_buffer, 2, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createAREQMsg(message_buffer, 2, &hdr);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    length = createAREQMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createAREQMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -112,13 +98,10 @@ TEST(test_DSR_options_errors, createAREPOptionErrorHandling)
         .target = 2
     };
 
-    length = createAREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
+    length = createAREPMsg(message_buffer, 4, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createAREPMsg(message_buffer, 4, &hdr);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    length = createAREPMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createAREPMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -127,24 +110,19 @@ TEST(test_DSR_options_errors, createROUTOptionErrorHandling)
     uint8_t addr_list[] = {0x01, 0x02};
     struct rout_option hdr = {
         .segments_left = 2,
-        .addr_list = NULL,
+        .addr_list = addr_list,
         .addr_list_len = 0
     };
 
-    length = createROUTMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    hdr.addr_list = addr_list;
-
-    length = createROUTMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createROUTMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
     hdr.addr_list_len = sizeof(addr_list);
 
-    length = createROUTMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createROUTMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createROUTMsg(message_buffer, 4, &hdr);
+    length = createROUTMsg(message_buffer, 4, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }
 
@@ -152,23 +130,18 @@ TEST(test_DSR_options_errors, createDATAOptionErrorHandling)
 {
     uint8_t data[] = {0xaa, 0x55, 0xaa};
     struct data_option hdr = {
-        .data = NULL,
+        .data = data,
         .data_len = 0
     };
 
-    length = createDATAMsg(message_buffer, MESSAGE_BUFFER_SIZE, NULL);
-    TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
-
-    hdr.data = data;
-
-    length = createDATAMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createDATAMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
     hdr.data_len = sizeof(data);
 
-    length = createDATAMsg(NULL, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createDATAMsg(NULL, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 
-    length = createDATAMsg(message_buffer, 4, &hdr);
+    length = createDATAMsg(message_buffer, 4, hdr);
     TEST_ASSERT_EQUAL(ERROR_CREATE_MSG, length);
 }

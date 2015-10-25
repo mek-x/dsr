@@ -30,7 +30,7 @@ TEST(test_DSR_options, createRREQOptionEmpty)
         .addr_list_len = 0
     };
 
-    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -47,7 +47,7 @@ TEST(test_DSR_options, createRREQOptionWithAddressList)
         .addr_list_len = sizeof(addr_list)
     };
 
-    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -62,7 +62,7 @@ TEST(test_DSR_options, createRREPOption)
         .addr_list_len = sizeof(addr_list)
     };
 
-    length = createRREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -76,7 +76,7 @@ TEST(test_DSR_options, createRERROption)
         .target = 2
     };
 
-    length = createRERRMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createRERRMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -88,7 +88,7 @@ TEST(test_DSR_options, createAREQOption)
         .id = 1
     };
 
-    length = createAREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createAREQMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -102,7 +102,7 @@ TEST(test_DSR_options, createAREPOption)
         .target = 2
     };
 
-    length = createAREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createAREPMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -117,7 +117,7 @@ TEST(test_DSR_options, createROUTOption)
         .addr_list_len = sizeof(addr_list)
     };
 
-    length = createROUTMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createROUTMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -131,7 +131,7 @@ TEST(test_DSR_options, createDATAOption)
         .data_len = sizeof(data)
     };
 
-    length = createDATAMsg(message_buffer, MESSAGE_BUFFER_SIZE, &hdr);
+    length = createDATAMsg(message_buffer, MESSAGE_BUFFER_SIZE, hdr);
     TEST_ASSERT_EQUAL(sizeof(expected_output), length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, length);
 }
@@ -153,8 +153,8 @@ TEST(test_DSR_options, createMessageDataWithRoute)
         .data_len = sizeof(data)
     };
 
-    length = createROUTMsg(message_buffer, sizeof(message_buffer), &rout_hdr);
-    length = createDATAMsg(message_buffer+length, sizeof(message_buffer)-length, &data_hdr);
+    length = createROUTMsg(message_buffer, sizeof(message_buffer), rout_hdr);
+    length = createDATAMsg(message_buffer+length, sizeof(message_buffer)-length, data_hdr);
 
     TEST_ASSERT_NOT_EQUAL(ERROR_CREATE_MSG, length);
     TEST_ASSERT_EQUAL_MEMORY(expected_output, message_buffer, sizeof(expected_output));
