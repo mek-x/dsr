@@ -168,8 +168,7 @@ inline int createDATAMsg(uint8_t *buf, uint8_t length, struct data_option header
 
 enum dsr_types_t getMsgType(const uint8_t *buf)
 {
-    if (((*buf & (~TYPE_HEADER_MASK)) != 0) ||
-        ((*buf & TYPE_HEADER_MASK) == 0))
+    if ((*buf & (~TYPE_HEADER_MASK)) != 0)
         return TYPE_ERROR;
 
     return *buf;

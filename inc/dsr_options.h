@@ -6,6 +6,7 @@
 #define ERROR_CREATE_MSG 0
 
 enum dsr_types_t {
+    TYPE_ERROR = 0,
     RERR_TYPE = 1,
     RREQ_TYPE,
     RREP_TYPE,
@@ -13,7 +14,6 @@ enum dsr_types_t {
     AREP_TYPE,
     ROUT_TYPE,
     DATA_TYPE,
-    TYPE_ERROR = -1
 };
 
 struct rreq_option {
