@@ -16,7 +16,8 @@ TEST_GROUP_RUNNER(test_DSR_api)
 
 TEST_GROUP_RUNNER(test_DSR_options)
 {
-    RUN_TEST_CASE(test_DSR_options, createRREQOption);
+    RUN_TEST_CASE(test_DSR_options, createRREQOptionEmpty);
+    RUN_TEST_CASE(test_DSR_options, createRREQOptionWithAddressList);
     RUN_TEST_CASE(test_DSR_options, createRREQOptionErrorHandling);
     RUN_TEST_CASE(test_DSR_options, createRREPOption);
     RUN_TEST_CASE(test_DSR_options, createRREPOptionErrorHandling);
